@@ -1,6 +1,6 @@
 import GlobalContext from "../GlobalContext";
 import Scene2D from "../Scene2D";
-import { degToRad, distance2D, randomRange } from "../Utils/MathUtils";
+import { degToRad, distance2D, randomRange, clamp } from "../Utils/MathUtils";
 
 class Bubble {
   constructor(context, x, y, radius) {
@@ -164,8 +164,8 @@ export default class SceneBouncingBubbles extends Scene2D {
     //   this.orientation.gamma.toFixed(2);
 
     this.bubbles.forEach((b) => {
-      // b.gx = qqch => -1 <-> 1
-      // b.gy = qqch d'autre => -1 <-> 1
+      b.gx = gx_;
+      b.gy = gy_;
     });
   }
 }
