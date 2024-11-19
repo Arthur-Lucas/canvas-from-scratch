@@ -148,12 +148,24 @@ export default class SceneBouncingBubbles extends Scene2D {
   }
 
   onDeviceOrientation() {
-    this.debug.domDebug =
-      "alpha : " +
-      this.orientation.alpha.toFixed(2) +
-      " <br> beta : " +
-      this.orientation.beta.toFixed(2) +
-      " <br> gamma : " +
-      this.orientation.gamma.toFixed(2);
+    let gx_ = this.orientation.gamma / 90;
+    let gy_ = this.orientation.beta / 90;
+    gx_ = clamp(gx_, -1, 1);
+    gy_ = clamp(gy_, -1, 1);
+    let coordinates_ = "";
+    coordinates_ = coordinates_.concat(gx_.toFixed(2), ", ", gy_.toFixed(2));
+
+    this.debug.domDebug = coordinates_;
+    //   "alpha : " +
+    //   this.orientation.alpha.toFixed(2) +
+    //   " <br> beta : " +
+    //   this.orientation.beta.toFixed(2) +
+    //   " <br> gamma : " +
+    //   this.orientation.gamma.toFixed(2);
+
+    this.bubbles.forEach((b) => {
+      // b.gx = qqch => -1 <-> 1
+      // b.gy = qqch d'autre => -1 <-> 1
+    });
   }
 }
