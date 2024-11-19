@@ -14,6 +14,9 @@ class Bubble {
     /** speed */
     this.vx = randomRange(-200, 200);
     this.vy = randomRange(-200, 200);
+
+    this.gx = 0;
+    this.gy = 0;
   }
 
   draw() {
@@ -37,6 +40,10 @@ class Bubble {
     this.vx = this.x > width - this.radius ? -Math.abs(this.vx) : this.vx;
     this.vy = this.y < this.radius ? Math.abs(this.vy) : this.vy;
     this.vy = this.y > height - this.radius ? -Math.abs(this.vy) : this.vy;
+    this.gx = this.x < this.radius ? Math.abs(this.gx) : 0;
+    this.gx = this.x > width - this.radius ? -Math.abs(this.gx) : 0;
+    this.gy = this.y < this.radius ? Math.abs(this.gy) : 0;
+    this.gy = this.y > height - this.radius ? -Math.abs(this.gy) : 0;
   }
 }
 
@@ -50,6 +57,7 @@ export default class SceneBouncingBubbles extends Scene2D {
       threshold: 50,
       radius: 5,
       nBubbles: 10,
+      gStrength: 100,
     };
     if (!!this.debugFolder) {
       this.debugFolder.add(this.params, "threshold", 0, 200);
@@ -68,6 +76,7 @@ export default class SceneBouncingBubbles extends Scene2D {
         .onFinishChange(() => {
           this.generateBubbles();
         });
+      this.debugFolder.add(this.params, "gStrength", 0, 400);
     }
 
     /** device orientation */
@@ -164,8 +173,8 @@ export default class SceneBouncingBubbles extends Scene2D {
     //   this.orientation.gamma.toFixed(2);
 
     this.bubbles.forEach((b) => {
-      b.gx = gx_;
-      b.gy = gy_;
+      b.gx = gx_ * this.params.gStrength;
+      b.gy = gy_ * this.params.gStrength;
     });
   }
 }
