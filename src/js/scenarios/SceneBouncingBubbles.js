@@ -28,6 +28,7 @@ class Bubble {
   }
 
   update(width, height) {
+    /* gravity bounce */
     this.gx = this.x > this.radius ? this.gx : 0;
     this.gx = this.x > width - this.radius ? this.gx : 0;
     this.gy = this.y < this.radius ? this.gy : 0;
@@ -45,15 +46,6 @@ class Bubble {
     this.vx = this.x > width - this.radius ? -Math.abs(this.vx) : this.vx;
     this.vy = this.y < this.radius ? Math.abs(this.vy) : this.vy;
     this.vy = this.y > height - this.radius ? -Math.abs(this.vy) : this.vy;
-
-    /* gravity bounce */
-
-    // this.gx = this.x < this.radius ? Math.abs(this.gx) : -Math.abs(this.vx);
-    // this.gx =
-    //   this.x > width - this.radius ? -Math.abs(this.gx) : Math.abs(this.vx);
-    // this.gy = this.y < this.radius ? Math.abs(this.gy) : -Math.abs(this.vy);
-    // this.gy =
-    //   this.y > height - this.radius ? -Math.abs(this.gy) : Math.abs(this.vy);
   }
 }
 
