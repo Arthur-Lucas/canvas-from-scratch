@@ -30,9 +30,9 @@ class Bubble {
   update(width, height) {
     /* gravity bounce */
     this.gx = this.x > this.radius ? this.gx : 0;
-    this.gx = this.x > width - this.radius ? this.gx : 0;
-    this.gy = this.y < this.radius ? this.gy : 0;
-    this.gy = this.y > height - this.radius ? this.gy : 0;
+    this.gx = this.x < width - this.radius ? this.gx : 0;
+    this.gy = this.y > this.radius ? this.gy : 0;
+    this.gy = this.y < height - this.radius ? this.gy : 0;
 
     this.x += (this.vx + this.gx * this.time.delta) / 1000;
     this.y += (this.vy + this.gy * this.time.delta) / 1000;
