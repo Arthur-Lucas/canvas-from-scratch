@@ -55,7 +55,6 @@ export default class SceneGravityCubes extends Scene3D {
     /** matter js */
     this.engine = Engine.create({ render: { visible: false } });
     this.engine.gravity.scale *= this.params.gScale;
-    console.log(this.engine.gravity);
     this.bodies = [
       this.wallRight.body,
       // this.wallBottom.body,
@@ -89,14 +88,13 @@ export default class SceneGravityCubes extends Scene3D {
   }
 
   addCube(x, y) {
-    const cube_ = new GravityCube(50, colors[1]);
+    const cube_ = new GravityCube(50, colors[Math.round(randomRange(0, 2))]);
     cube_.setPosition(x, y);
 
     this.add(cube_);
     this.cubes.push(cube_);
 
     Composite.add(this.engine.world, cube_.body);
-    console.log(this.cubes);
     return cube_;
   }
 

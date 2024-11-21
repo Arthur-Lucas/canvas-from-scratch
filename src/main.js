@@ -32,9 +32,17 @@ const update = () => {
   const scale_ = 1 + (Math.cos((5 * time.elapsed) / 1000) / 2 + 0.5) / 20;
   btn.style.transform = `scale(${scale_}, ${1})`;
 
-  //   console.log(scene1.height, scene1.bubbles);
-
   /** bubbles + cube scan = is IN or OUT ? */
+  const outScene1_up = scene1.bubbles.filter((b) => {
+    return b.y < 0;
+  });
+  const outScene2_up = scene2.cubes.filter((c) => {
+    return c.position.y > scene2.height / 2;
+  });
+  const outScene3_up = scene3.bubbles.filter((b) => {
+    return b.y < 0;
+  });
+
   const outScene1_down = scene1.bubbles.filter((b) => {
     return b.y > scene1.height;
   });
@@ -46,19 +54,48 @@ const update = () => {
   });
 
   /** remove entities (cube + bubble) OUT of their own scene */
+  outScene1_up.forEach((bubbleToRemove) => {
+    scene1.removeBubble(bubbleToRemove);
+  });
+  outScene2_up.forEach((cubeToRemove) => {
+    scene2.removeCube(cubeToRemove);
+  });
+  outScene3_up.forEach((bubbleToRemove) => {
+    scene3.removeBubble(bubbleToRemove);
+  });
+
   outScene1_down.forEach((bubbleToRemove) => {
     scene1.removeBubble(bubbleToRemove);
   });
-
   outScene2_down.forEach((cubeToRemove) => {
     scene2.removeCube(cubeToRemove);
   });
-
   outScene3_down.forEach((cubeToRemove) => {
     scene3.removeBubble(cubeToRemove);
   });
 
   /** add new entities to corresponding scene, ex: bulle scene 1 -> cube scene 2 */
+
+  outScene1_up.forEach((bubbleToMove) => {
+    const newBubble_ = scene3.addBubble(bubbleToMove.x, scene3.height);
+    newBubble_.vy = -Math.abs(bubbleToMove.vy);
+    newBubble_.vx = bubbleToMove.vx;
+  });
+  outScene2_up.forEach((cubeToMove) => {
+    const newBubble_ = scene1.addBubble(
+      cubeToMove.position.x + scene1.width / 2,
+      scene1.height
+    );
+    newBubble_.vy = -Math.abs(newBubble_.vy);
+  });
+  outScene3_up.forEach((bubbleToMove) => {
+    const newCube_ = scene2.addCube(
+      bubbleToMove.x - scene1.width / 2,
+      -scene2.height / 2
+    );
+    newCube_.vy = Math.abs(newCube_.vy);
+  });
+
   outScene1_down.forEach((bubbleToMove) => {
     const newCube_ = scene2.addCube(
       bubbleToMove.x - scene1.width / 2,
@@ -66,7 +103,6 @@ const update = () => {
     );
     newCube_.vy = Math.abs(newCube_.vy);
   });
-
   outScene2_down.forEach((cubeToMove) => {
     const newBubble_ = scene3.addBubble(
       cubeToMove.position.x + scene3.width / 2,
@@ -74,18 +110,11 @@ const update = () => {
     );
     newBubble_.vy = Math.abs(newBubble_.vy);
   });
-
   outScene3_down.forEach((bubbleToMove) => {
     const newBubble_ = scene1.addBubble(bubbleToMove.x, 0);
-    newBubble_.vy = Math.abs(newBubble_.vy);
+    newBubble_.vy = Math.abs(bubbleToMove.vy);
+    newBubble_.vx = bubbleToMove.vx;
   });
-
-  /** exemple pour la suite */
-  // outScene1_up.forEach(bulleToMove => {
-  //     const newBubble_ = scene3.addBubble('TODO', 'TODO')
-  //     newBubble_.vx = bulleToMove.vx // <---- transmission de la vitesse
-  //     newBubble_.vy = bulleToMove.vy // <---- transmission de la vitesse
-  // })
 };
 time.on("update", update);
 
