@@ -153,9 +153,9 @@ export default class SceneGravityCubes extends Scene3D {
 
   onDeviceOrientation() {
     let gx_ = this.orientation.gamma / 90;
-    // let gy_ = this.orientation.beta / 90;
+    let gy_ = this.orientation.beta / 90;
     gx_ = clamp(gx_, -1, 1);
-    // gy_ = clamp(gy_, -1, 1);
+    gy_ = clamp(gy_, -1, 1);
 
     /** debug */
     let coordinates_ = "";
@@ -164,6 +164,6 @@ export default class SceneGravityCubes extends Scene3D {
 
     /** update engine gravity */
     this.engine.gravity.x = gx_;
-    // this.engine.gravity.y = gy_;
+    this.engine.gravity.y = gy_;
   }
 }
