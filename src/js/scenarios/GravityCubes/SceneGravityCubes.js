@@ -38,8 +38,13 @@ export default class SceneGravityCubes extends Scene3D {
     this.wallLeft = new Wall("blue");
     this.wallRight = new Wall("blue");
     this.wallBottom = new Wall("red");
+
+    this.floorTop = new Wall("white");
+    this.floorBottom = new Wall("white");
     this.add(this.wallLeft);
     this.add(this.wallRight);
+    this.add(this.floorTop);
+    this.add(this.floorBottom);
     // this.add(this.wallBottom);
 
     /** cube */
@@ -60,6 +65,8 @@ export default class SceneGravityCubes extends Scene3D {
     this.bodies = [
       this.wallRight.body,
       this.wallLeft.body,
+      this.floorTop.body,
+      this.floorBottom.body,
       //   this.wallBottom.body,
       ...this.cubes.map((c) => c.body),
     ];
@@ -131,6 +138,16 @@ export default class SceneGravityCubes extends Scene3D {
     if (!!this.wallLeft) {
       this.wallLeft.setPosition(-this.width / 2 - THICKNESS, 0);
       this.wallLeft.setSize(THICKNESS, this.height);
+    }
+
+    if (!!this.floorTop) {
+      this.floorTop.setPosition(-this.width / 4, this.height / 8);
+      this.floorTop.setSize(this.width - THICKNESS, THICKNESS);
+    }
+
+    if (!!this.floorBottom) {
+      this.floorBottom.setPosition(this.width / 4, -this.height / 8);
+      this.floorBottom.setSize(this.width - THICKNESS, THICKNESS);
     }
   }
 
