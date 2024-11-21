@@ -1,5 +1,5 @@
 import GlobalContext from "./GlobalContext"
-import DomElement from "./Utils/DomElement"
+import DomElement from "../Utils/DomElement"
 
 export default class Scene2D {
     constructor(id) {

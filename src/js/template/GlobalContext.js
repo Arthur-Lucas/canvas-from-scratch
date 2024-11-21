@@ -1,6 +1,6 @@
-import Debug from "./Utils/Debug"
-import DeviceOrientation from "./Utils/DeviceOrientation"
-import Time from "./Utils/Time"
+import Debug from "../Utils/Debug"
+import DeviceOrientation from "../Utils/DeviceOrientation"
+import Time from "../Utils/Time"
 
 let instanceGlobalContext = null
 
@@ -66,6 +66,7 @@ export default class GlobalContext {
         window.removeEventListener('resize')
         window.removeEventListener('scroll')
         this.time.off('update')
+        this.useDeviceOrientation = false
         if(!!this.debug.ui) this.debug.ui.destroy()
     }
 }

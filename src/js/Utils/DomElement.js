@@ -17,7 +17,6 @@ export default class DomElement {
         }
     }
 
-    // -> sharemycode
     get isVisible() {
         let isVisible_ = true
         if (this.position.bottom < 0 || this.position.top > window.innerHeight ||
@@ -25,5 +24,11 @@ export default class DomElement {
             isVisible_ = false
         }
         return isVisible_
+    }
+
+    get aspectRatio() {
+        let ratio_ = 1
+        if(!!this.width && !!this.height) ratio_ = this.width / this.height
+        return ratio_
     }
 }
