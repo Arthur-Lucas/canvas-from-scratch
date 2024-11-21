@@ -7,6 +7,7 @@ import Wall from "./Wall";
 import { clamp } from "three/src/math/MathUtils.js";
 
 const THICKNESS = 20;
+const colors = ["red", "yellow", "blue"];
 
 export default class SceneGravityCubes extends Scene3D {
   constructor(id) {
@@ -41,7 +42,6 @@ export default class SceneGravityCubes extends Scene3D {
 
     /** cube */
     this.cubes = [];
-    const colors = ["red", "yellow", "blue"];
     for (let i = 0; i < 10; i++) {
       const cube_ = new GravityCube(50, colors[i % colors.length]);
       const x_ = randomRange(-this.width / 2, this.width / 2);
@@ -86,6 +86,18 @@ export default class SceneGravityCubes extends Scene3D {
     this.cubes = this.cubes.filter((c) => {
       return c !== cube;
     });
+  }
+
+  addCube(x, y) {
+    const cube_ = new GravityCube(50, colors[1]);
+    cube_.setPosition(x, y);
+
+    this.add(cube_);
+    this.cubes.push(cube_);
+
+    Composite.add(this.engine.world, cube_.body);
+    console.log(this.cubes);
+    return cube_;
   }
 
   update() {
