@@ -50,7 +50,7 @@ export default class SceneGravityCubes extends Scene3D {
     /** cube */
     this.cubes = [];
     for (let i = 0; i < 10; i++) {
-      const cube_ = new GravityCube(50, colors[i % colors.length]);
+      const cube_ = new GravityCube(40, colors[i % colors.length]);
       const x_ = randomRange(-this.width / 2, this.width / 2);
       const y_ = randomRange(-this.height / 2, this.height / 2);
       cube_.setPosition(x_, y_);
@@ -98,7 +98,7 @@ export default class SceneGravityCubes extends Scene3D {
   }
 
   addCube(x, y) {
-    const cube_ = new GravityCube(50, colors[Math.round(randomRange(0, 2))]);
+    const cube_ = new GravityCube(40, colors[Math.round(randomRange(0, 2))]);
     cube_.setPosition(x, y);
 
     this.add(cube_);
@@ -153,9 +153,9 @@ export default class SceneGravityCubes extends Scene3D {
 
   onDeviceOrientation() {
     let gx_ = this.orientation.gamma / 90;
-    let gy_ = this.orientation.beta / 90;
+    // let gy_ = this.orientation.beta / 90;
     gx_ = clamp(gx_, -1, 1);
-    gy_ = clamp(gy_, -1, 1);
+    // gy_ = clamp(gy_, -1, 1);
 
     /** debug */
     let coordinates_ = "";
@@ -164,6 +164,6 @@ export default class SceneGravityCubes extends Scene3D {
 
     /** update engine gravity */
     this.engine.gravity.x = gx_;
-    this.engine.gravity.y = gy_;
+    // this.engine.gravity.y = gy_;
   }
 }
