@@ -35,10 +35,12 @@ export default class SceneGravityCubes extends Scene3D {
     this.camera.position.z = 1000;
 
     /** walls */
+    this.wallLeft = new Wall("blue");
     this.wallRight = new Wall("blue");
     this.wallBottom = new Wall("red");
+    this.add(this.wallLeft);
     this.add(this.wallRight);
-    // this.add(this.wallBottom)
+    // this.add(this.wallBottom);
 
     /** cube */
     this.cubes = [];
@@ -57,7 +59,8 @@ export default class SceneGravityCubes extends Scene3D {
     this.engine.gravity.scale *= this.params.gScale;
     this.bodies = [
       this.wallRight.body,
-      // this.wallBottom.body,
+      this.wallLeft.body,
+      //   this.wallBottom.body,
       ...this.cubes.map((c) => c.body),
     ];
     Composite.add(this.engine.world, this.bodies);
@@ -107,7 +110,6 @@ export default class SceneGravityCubes extends Scene3D {
 
   scroll() {
     super.scroll();
-    // this.cube.rotation.z += 0.1 (example)
   }
 
   resize() {
@@ -119,11 +121,16 @@ export default class SceneGravityCubes extends Scene3D {
     this.camera.bottom = -this.height / 2;
 
     if (!!this.wallRight) {
-      this.wallRight.setPosition(this.width / 2, 0);
+      this.wallRight.setPosition(this.width / 2 + THICKNESS, 0);
       this.wallRight.setSize(THICKNESS, this.height);
 
-      this.wallBottom.setPosition(0, -this.height / 2);
+      this.wallBottom.setPosition(0, -this.height / 2 - THICKNESS);
       this.wallBottom.setSize(this.width - THICKNESS, THICKNESS);
+    }
+
+    if (!!this.wallLeft) {
+      this.wallLeft.setPosition(-this.width / 2 - THICKNESS, 0);
+      this.wallLeft.setSize(THICKNESS, this.height);
     }
   }
 
