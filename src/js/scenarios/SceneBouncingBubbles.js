@@ -12,8 +12,10 @@ class Bubble {
     this.time = new GlobalContext().time;
 
     /** speed */
-    this.vx = randomRange(-200, 200);
-    this.vy = randomRange(-200, 200);
+    this.baseVx = randomRange(-200, 200); // Vitesse de base en x
+    this.baseVy = randomRange(-200, 200); // Vitesse de base en y
+    this.vx = this.baseVx;
+    this.vy = this.baseVy;
 
     /** gravity */
     this.gx = 0;
@@ -48,6 +50,11 @@ class Bubble {
     // this.vy = this.y < this.radius ? Math.abs(this.vy) : this.vy
     // this.vy = this.y > height - this.radius ? -Math.abs(this.vy) : this.vy
   }
+
+  updateSpeed(speedFactor) {
+    this.vx = Math.abs(this.baseVx) * speedFactor;
+    this.vy = Math.abs(this.baseVy) * speedFactor;
+  }
 }
 
 export default class SceneBouncingBubbles extends Scene2D {
@@ -80,6 +87,12 @@ export default class SceneBouncingBubbles extends Scene2D {
           this.generateBubbles();
         });
       this.debugFolder.add(this.params, "gStrength", 0, 400);
+      this.debugFolder.add(this.params, "speed", -1, 1).onFinishChange(() => {
+        const speedFactor = this.params.speed;
+        if (!!this.bubbles) {
+          this.bubbles.forEach((b) => b.updateSpeed(speedFactor));
+        }
+      });
     }
 
     /** device orientation */
@@ -104,6 +117,7 @@ export default class SceneBouncingBubbles extends Scene2D {
 
   addBubble(x, y) {
     const bubble_ = new Bubble(this.context, x, y, this.params.radius);
+    bubble_.updateSpeed(this.params.speed);
     this.bubbles.push(bubble_);
     return bubble_;
   }
